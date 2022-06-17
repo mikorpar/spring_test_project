@@ -16,6 +16,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.constraints.NotBlank;
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 @Validated
 @RestController
@@ -26,12 +27,12 @@ public class BikeController {
     private final BikeService bikeService;
 
     @GetMapping
-    public ResponseEntity<List<Bike>> getBikes(@RequestParam("brand") String brand) {
-        return ResponseEntity.ok(bikeService.getAllBikes(brand));
+    public ResponseEntity<List<Bike>> getBikes(@RequestParam("brand") Optional<String> brand) {
+        return ResponseEntity.ok(bikeService.getAllBikes(brand.orElse("")));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Bike> getBike(@NotBlank @PathVariable("id") int id) {
+    public ResponseEntity<Bike> getBike(@PathVariable("id") Long id) {
         try {
             return ResponseEntity.ok(bikeService.getBike(id));
         } catch (BikeNotFoundException e) {
@@ -50,7 +51,7 @@ public class BikeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Bike> updateBike(@NotBlank @PathVariable("id") int id, @RequestBody BikeUpdateDTO bike) {
+    public ResponseEntity<Bike> updateBike(@PathVariable("id") Long id, @RequestBody BikeUpdateDTO bike) {
         Bike updatedBike;
 
         try {
@@ -63,7 +64,7 @@ public class BikeController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteBike(@PathVariable("id") int id) {
+    public ResponseEntity<String> deleteBike(@PathVariable("id") Long id) {
         try {
             bikeService.deleteBike(id);
         } catch (BikeNotFoundException e) {

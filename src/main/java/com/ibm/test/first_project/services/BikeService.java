@@ -3,55 +3,63 @@ package com.ibm.test.first_project.services;
 import com.ibm.test.first_project.data.dtos.BikeCreateDTO;
 import com.ibm.test.first_project.data.dtos.BikeUpdateDTO;
 import com.ibm.test.first_project.data.models.Bike;
+import com.ibm.test.first_project.data.repositories.BikeRepository;
 import com.ibm.test.first_project.exceptions.BikeNotFoundException;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class BikeService {
 
-    public Bike storeBike(BikeCreateDTO bike) {
+    private final BikeRepository bikeRepository;
+
+    public Bike storeBike(BikeCreateDTO bikeDTO) {
         // TODO save bike to DB
 
-        return null;
+        Bike bike = new Bike();
+        bike.setName(bikeDTO.getName());
+        bike.setBrand(bikeDTO.getBrand());
+        bike.setPrice(bikeDTO.getPrice());
+        bike.setColor(bikeDTO.getColor());
+
+        return bikeRepository.save(bike);
     }
 
     public List<Bike> getAllBikes(String brand) {
-        if (brand == null) {
-            // TODO return all bikes from DB
-
-            return null;
+        if (brand.isEmpty()) {
+            return bikeRepository.findAll();
         } else {
-            // TODO return all bikes where brand equals supplied brand
-
-            return null;
+            return bikeRepository.findAllByBrand(brand);
         }
     }
 
-    public Bike getBike(int id) throws BikeNotFoundException {
-        if (getBike(id) == null) {
-            throw new BikeNotFoundException(String.format("Bike with id: '%d' not found.", id));
-        }
-
-        // TODO return bike with supplied id
-        return null;
+    public Bike getBike(Long id) throws BikeNotFoundException {
+        return bikeRepository
+                .findById(id)
+                .orElseThrow(() -> new BikeNotFoundException(String.format("Bike with id: '%d' not found.", id)));
     }
 
-    public Bike updateBike(int id, BikeUpdateDTO bike) throws BikeNotFoundException {
-        if (getBike(id) == null) {
-            throw new BikeNotFoundException(String.format("Bike with id: '%d' not found.", id));
-        }
+    public Bike updateBike(Long id, BikeUpdateDTO bikeDTO) throws BikeNotFoundException {
+        Bike bike = bikeRepository
+                .findById(id)
+                .orElseThrow(() -> new BikeNotFoundException(String.format("Bike with id: '%d' not found.", id)));
 
-        // TODO update bike properties in DB
-        return null;
+        bike.setName(bikeDTO.getName());
+        bike.setBrand(bikeDTO.getBrand());
+        bike.setPrice(bikeDTO.getPrice());
+        bike.setColor(bikeDTO.getColor());
+
+        return bikeRepository.save(bike);
     }
 
-    public void deleteBike(int id) throws BikeNotFoundException {
-        if (getBike(id) == null) {
+    public void deleteBike(Long id) throws BikeNotFoundException {
+        if (!bikeRepository.existsById(id)) {
             throw new BikeNotFoundException(String.format("Bike with id: '%d' not found.", id));
         }
 
-        // TODO delete bike in DB
+        bikeRepository.deleteById(id);
     }
 }
