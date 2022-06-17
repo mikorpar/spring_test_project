@@ -7,9 +7,9 @@ import java.time.Instant;
 import java.util.List;
 
 @Data
-public class ReceiptGetDTO {
+public class ReceiptGetResDTO {
     private Long id;
     private Instant createdAt;
-    private List<ItemDTO> items;
+    private List<ItemResDTO> items;
     private BigDecimal totalPrice;
 }
