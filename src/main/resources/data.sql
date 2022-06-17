@@ -9,3 +9,10 @@ INSERT INTO Bike (name, brand, price, color) VALUES
 ('Mankind NXS', 'BMX', 3519.99, 'gray'),
 ('STY STR', 'BMX', 3699.89, 'black'),
 ('Nevada 26 1.9 V-brake', 'Fuji', 3299.99, 'black');
+
+INSERT INTO Receipt (id, created_at) VALUES
+(1, '2022-06-07 12:12:00');
+
+INSERT INTO RECEIPT_ITEMS (bike_id, receipt_id, quantity) VALUES
+(1, 1, 1),
+(2, 1, 1);
