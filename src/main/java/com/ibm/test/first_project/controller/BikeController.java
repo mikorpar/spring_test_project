@@ -1,7 +1,7 @@
 package com.ibm.test.first_project.controller;
 
-import com.ibm.test.first_project.data.dtos.BikeCreateDTO;
-import com.ibm.test.first_project.data.dtos.BikeUpdateDTO;
+import com.ibm.test.first_project.data.dtos.BikeCreateReqDTO;
+import com.ibm.test.first_project.data.dtos.BikeUpdateReqDTO;
 import com.ibm.test.first_project.data.models.Bike;
 import com.ibm.test.first_project.exceptions.BikeNotFoundException;
 import com.ibm.test.first_project.services.BikeService;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.validation.constraints.NotBlank;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
@@ -41,7 +40,7 @@ public class BikeController {
     }
 
     @PostMapping
-    public ResponseEntity<Bike> createBike(@RequestBody BikeCreateDTO bike) {
+    public ResponseEntity<Bike> createBike(@RequestBody BikeCreateReqDTO bike) {
         URI uri = URI.create(ServletUriComponentsBuilder
                 .fromCurrentContextPath()
                 .path("/bikes")
@@ -51,7 +50,7 @@ public class BikeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Bike> updateBike(@PathVariable("id") Long id, @RequestBody BikeUpdateDTO bike) {
+    public ResponseEntity<Bike> updateBike(@PathVariable("id") Long id, @RequestBody BikeUpdateReqDTO bike) {
         Bike updatedBike;
 
         try {
