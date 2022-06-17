@@ -1,11 +1,16 @@
 package com.ibm.test.first_project.data.models;
 
-import lombok.Data;
+import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Objects;
 
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @Table
 @Entity
 public class Bike {
@@ -21,4 +26,17 @@ public class Bike {
     private BigDecimal price;
     @Column(nullable = false)
     private String color;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Bike bike = (Bike) o;
+        return id != null && Objects.equals(id, bike.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
