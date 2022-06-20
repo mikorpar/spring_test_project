@@ -1,5 +1,6 @@
 INSERT INTO BIKE (name, brand, price, color) VALUES
 ('Aspect 960', 'Scott', 5699, 'gray'),
+('Aspect 960', 'Scott', 5699, 'green'),
 ('Picton I', 'Head', 8999, 'yellow'),
 ('Legos II', 'Head', 20799.96, 'green'),
 ('Marlin 8', 'Trek', 7799, 'red'),
@@ -15,4 +16,5 @@ INSERT INTO SALES_ORDER (created_at) VALUES
 
 INSERT INTO ORDER_ITEM (bike_id, sales_order_id, quantity) VALUES
 (1, 1, 1),
-(2, 1, 1);
+(2, 1, 1),
+(3, 1, 1);
