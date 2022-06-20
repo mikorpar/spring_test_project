@@ -25,6 +25,6 @@ public class OrderController {
 
     @GetMapping
     public ResponseEntity<List<SalesOrder>> getReceipts(@RequestParam(value = "date", required = false) LocalDate date) {
-        return ResponseEntity.ok(salesOrderService.getOrders(date));
+        return date == null ? ResponseEntity.ok(salesOrderService.getOrders()) : ResponseEntity.ok(salesOrderService.getOrders(date));
     }
 }

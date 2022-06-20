@@ -42,13 +42,13 @@ public class SalesOrderService {
         return salesOrderRepository.save(salesOrder);
     }
 
-    public List<SalesOrder> getOrders(LocalDate date) {
-        if (date != null) {
-            Instant startDate = date.atStartOfDay(ZoneId.systemDefault()).toInstant();
-            Instant endDate = startDate.plus(Duration.ofDays(1));
-            return salesOrderRepository.findOrdersByCreatedAtBetween(startDate, endDate);
-        }
-
+    public List<SalesOrder> getOrders() {
         return salesOrderRepository.findAll();
+    }
+
+    public List<SalesOrder> getOrders(LocalDate date) {
+        Instant startDate = date.atStartOfDay(ZoneId.systemDefault()).toInstant();
+        Instant endDate = startDate.plus(Duration.ofDays(1));
+        return salesOrderRepository.findOrdersByCreatedAtBetween(startDate, endDate);
     }
 }
