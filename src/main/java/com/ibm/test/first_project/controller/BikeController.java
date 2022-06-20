@@ -1,7 +1,7 @@
 package com.ibm.test.first_project.controller;
 
-import com.ibm.test.first_project.data.dtos.BikeCreateReqDTO;
-import com.ibm.test.first_project.data.dtos.BikeUpdateReqDTO;
+import com.ibm.test.first_project.data.dtos.BikeCreateReq;
+import com.ibm.test.first_project.data.dtos.BikeUpdateReq;
 import com.ibm.test.first_project.data.models.Bike;
 import com.ibm.test.first_project.exceptions.BikeNotFoundException;
 import com.ibm.test.first_project.services.BikeService;
@@ -40,7 +40,7 @@ public class BikeController {
     }
 
     @PostMapping
-    public ResponseEntity<Bike> createBike(@RequestBody BikeCreateReqDTO bike) {
+    public ResponseEntity<Bike> createBike(@RequestBody BikeCreateReq bike) {
         URI uri = URI.create(ServletUriComponentsBuilder
                 .fromCurrentContextPath()
                 .path("/bikes")
@@ -50,7 +50,7 @@ public class BikeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Bike> updateBike(@PathVariable("id") Long id, @RequestBody BikeUpdateReqDTO bike) {
+    public ResponseEntity<Bike> updateBike(@PathVariable("id") Long id, @RequestBody BikeUpdateReq bike) {
         Bike updatedBike;
 
         try {

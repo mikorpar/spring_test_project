@@ -1,7 +1,7 @@
 package com.ibm.test.first_project.services;
 
-import com.ibm.test.first_project.data.dtos.BikeCreateReqDTO;
-import com.ibm.test.first_project.data.dtos.BikeUpdateReqDTO;
+import com.ibm.test.first_project.data.dtos.BikeCreateReq;
+import com.ibm.test.first_project.data.dtos.BikeUpdateReq;
 import com.ibm.test.first_project.data.models.Bike;
 import com.ibm.test.first_project.data.repositories.BikeRepository;
 import com.ibm.test.first_project.exceptions.BikeNotFoundException;
@@ -16,7 +16,7 @@ public class BikeService {
 
     private final BikeRepository bikeRepository;
 
-    public Bike storeBike(BikeCreateReqDTO bikeDTO) {
+    public Bike storeBike(BikeCreateReq bikeDTO) {
         // TODO save bike to DB
 
         Bike bike = new Bike();
@@ -42,7 +42,7 @@ public class BikeService {
                 .orElseThrow(() -> new BikeNotFoundException(String.format("Bike with id: '%d' not found.", id)));
     }
 
-    public Bike updateBike(Long id, BikeUpdateReqDTO bikeDTO) throws BikeNotFoundException {
+    public Bike updateBike(Long id, BikeUpdateReq bikeDTO) throws BikeNotFoundException {
         Bike bike = bikeRepository
                 .findById(id)
                 .orElseThrow(() -> new BikeNotFoundException(String.format("Bike with id: '%d' not found.", id)));
