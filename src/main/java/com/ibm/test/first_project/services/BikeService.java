@@ -32,16 +32,20 @@ public class BikeService {
         return bikeRepository.findAll();
     }
 
-    public List<Bike> getAllBikesByBrand(String brand) {
+    public List<Bike> getAllBikes(String brand) {
         return bikeRepository.findAllByBrand(brand);
     }
 
-    public List<Bike> getAllBikesByColor(String color) {
-        return bikeRepository.findAllByColor(color);
+    public List<Bike> getAllBikesByBrandOrderedThisYear(String brand) {
+        return bikeRepository.findAllByBrandAndOrderedThisYear(brand);
     }
 
-    public List<Bike> getAllBikesByBrandAndColor(String brand, String color) {
-        return bikeRepository.findAllByBrandAndColor(brand, color);
+    public List<Bike> getAllBikesByColorOrderedThisYear(String color) {
+        return bikeRepository.findAllByColorAndOrderedThisYear(color);
+    }
+
+    public List<Bike> getAllBikesByBrandAndColorOrderedThisYear(String brand, String color) {
+        return bikeRepository.findAllByBrandAndColorAndOrderedThisYear(brand, color);
     }
 
     public Bike getBike(Long id) throws BikeNotFoundException {
@@ -69,5 +73,9 @@ public class BikeService {
         }
 
         bikeRepository.deleteById(id);
+    }
+
+    public List<Bike> test() {
+        return bikeRepository.findAllByBrandAndColorAndOrderedThisYear("Scott", "green");
     }
 }

@@ -1,6 +1,6 @@
 package com.ibm.test.first_project.services;
 
-import com.ibm.test.first_project.data.dtos.StatisticsGetRes;
+import com.ibm.test.first_project.data.dtos.Statistics;
 import com.ibm.test.first_project.data.models.Bike;
 import com.ibm.test.first_project.data.models.OrderItem;
 import com.ibm.test.first_project.data.models.SalesOrder;
@@ -18,19 +18,19 @@ public class StatisticsService {
     private final SalesOrderService salesOrderService;
     private final BikeService bikeService;
 
-    public StatisticsGetRes calcTotalSalesIncomeByBrand(String brand) {
-        return calcTotalSalesIncomeByBikeProperty(bikeService.getAllBikesByBrand(brand));
+    public Statistics calcTotalSalesIncomeByBrand(String brand) {
+        return calcTotalSalesIncomeByBikeProperty(bikeService.getAllBikesByBrandOrderedThisYear(brand));
     }
 
-    public StatisticsGetRes calcTotalSalesIncomeByColor(String color) {
-        return calcTotalSalesIncomeByBikeProperty(bikeService.getAllBikesByColor(color));
+    public Statistics calcTotalSalesIncomeByColor(String color) {
+        return calcTotalSalesIncomeByBikeProperty(bikeService.getAllBikesByColorOrderedThisYear(color));
     }
 
-    public StatisticsGetRes calcTotalSalesIncomeByBrandAndColor(String brand, String color) {
-        return calcTotalSalesIncomeByBikeProperty(bikeService.getAllBikesByBrandAndColor(brand, color));
+    public Statistics calcTotalSalesIncomeByBrandAndColor(String brand, String color) {
+        return calcTotalSalesIncomeByBikeProperty(bikeService.getAllBikesByBrandAndColorOrderedThisYear(brand, color));
     }
 
-    private StatisticsGetRes calcTotalSalesIncomeByBikeProperty(List<Bike> bikes) {
+    private Statistics calcTotalSalesIncomeByBikeProperty(List<Bike> bikes) {
         BigDecimal totalIncome = calcTotalSalesIncome();
         BigDecimal totalIncomeByBrand = BigDecimal.valueOf(0);
 
@@ -40,7 +40,7 @@ public class StatisticsService {
             }
         }
 
-        StatisticsGetRes stastistics = new StatisticsGetRes();
+        Statistics stastistics = new Statistics();
         stastistics.setTotalIncome(totalIncome);
         stastistics.setPercentage(totalIncomeByBrand.divide(totalIncome, 2, RoundingMode.HALF_UP).doubleValue() * 100);
 

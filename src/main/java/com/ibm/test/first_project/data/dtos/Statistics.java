@@ -5,7 +5,7 @@ import lombok.Data;
 import java.math.BigDecimal;
 
 @Data
-public class StatisticsGetRes {
+public class Statistics {
     private BigDecimal totalIncome;
     private Double percentage;
 }

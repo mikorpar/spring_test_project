@@ -26,7 +26,7 @@ public class BikeController {
 
     @GetMapping
     public ResponseEntity<List<Bike>> getBikes(@RequestParam(value = "brand", required = false) String brand) {
-        return brand == null ? ResponseEntity.ok(bikeService.getAllBikes()) : ResponseEntity.ok(bikeService.getAllBikesByBrand(brand));
+        return brand == null ? ResponseEntity.ok(bikeService.getAllBikes()) : ResponseEntity.ok(bikeService.getAllBikes(brand));
     }
 
     @GetMapping("/{id}")
@@ -70,5 +70,10 @@ public class BikeController {
         }
 
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/test")
+    public ResponseEntity<List<Bike>> test() {
+        return ResponseEntity.ok(bikeService.test());
     }
 }
