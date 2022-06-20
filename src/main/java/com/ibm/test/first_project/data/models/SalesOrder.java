@@ -1,9 +1,8 @@
 package com.ibm.test.first_project.data.models;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -14,21 +13,22 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
+@NoArgsConstructor
 @Table
 @Entity
-public class Receipt {
+public class SalesOrder {
     @Id
-    @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP")
+    @CreationTimestamp
+
     private Instant createdAt;
 
-    @OneToMany(mappedBy = "receipt")
+    @OneToMany(mappedBy = "salesOrder", cascade = CascadeType.ALL)
     @ToString.Exclude
-    private List<ReceiptItems> items;
+    @JsonManagedReference
+    private List<OrderItem> items;
 
     @Transient
     private BigDecimal totalPrice;
@@ -41,7 +41,7 @@ public class Receipt {
     private void calcTotalPrice() {
         BigDecimal total = BigDecimal.valueOf(0.00);
 
-        for (ReceiptItems item: items) {
+        for (OrderItem item: items) {
             total = total.add(item.getBike().getPrice().multiply(BigDecimal.valueOf(item.getQuantity())));
         }
 
@@ -52,11 +52,11 @@ public class Receipt {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Receipt receipt = (Receipt) o;
-        return id.equals(receipt.id) &&
-                createdAt.equals(receipt.createdAt) &&
-                Objects.equals(items, receipt.items) &&
-                Objects.equals(totalPrice, receipt.totalPrice);
+        SalesOrder salesOrder = (SalesOrder) o;
+        return id.equals(salesOrder.id) &&
+                createdAt.equals(salesOrder.createdAt) &&
+                Objects.equals(items, salesOrder.items) &&
+                Objects.equals(totalPrice, salesOrder.totalPrice);
     }
 
     @Override

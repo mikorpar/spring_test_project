@@ -1,5 +1,7 @@
 package com.ibm.test.first_project.data.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -12,15 +14,17 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Table
 @Entity
-public class ReceiptItems implements Serializable {
+public class OrderItem implements Serializable {
 
     @EmbeddedId
-    private ReceiptItemsId id;
+    @JsonIgnore
+    private OrderItemKey id = new OrderItemKey();
 
     @ManyToOne
-    @MapsId("receiptId")
+    @MapsId("orderId")
     @ToString.Exclude
-    private Receipt receipt;
+    @JsonBackReference
+    private SalesOrder salesOrder;
 
     @ManyToOne
     @MapsId("bikeId")
@@ -34,12 +38,12 @@ public class ReceiptItems implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ReceiptItems that = (ReceiptItems) o;
-        return receipt.equals(that.receipt) && bike.equals(that.bike) && quantity.equals(that.quantity);
+        OrderItem that = (OrderItem) o;
+        return salesOrder.equals(that.salesOrder) && bike.equals(that.bike) && quantity.equals(that.quantity);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(receipt, bike, quantity);
+        return Objects.hash(salesOrder, bike, quantity);
     }
 }

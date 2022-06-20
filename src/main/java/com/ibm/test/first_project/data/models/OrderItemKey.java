@@ -14,21 +14,21 @@ import java.util.Objects;
 @Embeddable
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReceiptItemsId implements Serializable {
+public class OrderItemKey implements Serializable {
 
-    private Long receiptId;
+    private Long orderId;
     private Long bikeId;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ReceiptItemsId that = (ReceiptItemsId) o;
-        return receiptId.equals(that.receiptId) && bikeId.equals(that.bikeId);
+        OrderItemKey that = (OrderItemKey) o;
+        return orderId.equals(that.orderId) && bikeId.equals(that.bikeId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(receiptId, bikeId);
+        return Objects.hash(orderId, bikeId);
     }
 }
