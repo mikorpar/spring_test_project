@@ -17,8 +17,6 @@ public class BikeService {
     private final BikeRepository bikeRepository;
 
     public Bike storeBike(BikeCreateReq bikeDTO) {
-        // TODO save bike to DB
-
         Bike bike = new Bike();
         bike.setName(bikeDTO.getName());
         bike.setBrand(bikeDTO.getBrand());
