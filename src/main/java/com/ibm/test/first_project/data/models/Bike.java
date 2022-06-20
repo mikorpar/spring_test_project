@@ -1,10 +1,13 @@
 package com.ibm.test.first_project.data.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -26,6 +29,11 @@ public class Bike {
     private BigDecimal price;
     @Column(nullable = false)
     private String color;
+
+    @OneToMany(mappedBy = "bike")
+    @ToString.Exclude
+    @JsonIgnore
+    private List<OrderItem> items;
 
     @Override
     public boolean equals(Object o) {
