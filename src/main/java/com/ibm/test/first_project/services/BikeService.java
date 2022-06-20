@@ -28,12 +28,20 @@ public class BikeService {
         return bikeRepository.save(bike);
     }
 
-    public List<Bike> getAllBikes(String brand) {
-        if (brand.isEmpty()) {
-            return bikeRepository.findAll();
-        } else {
-            return bikeRepository.findAllByBrand(brand);
-        }
+    public List<Bike> getAllBikes() {
+        return bikeRepository.findAll();
+    }
+
+    public List<Bike> getAllBikesByBrand(String brand) {
+        return bikeRepository.findAllByBrand(brand);
+    }
+
+    public List<Bike> getAllBikesByColor(String color) {
+        return bikeRepository.findAllByColor(color);
+    }
+
+    public List<Bike> getAllBikesByBrandAndColor(String brand, String color) {
+        return bikeRepository.findAllByBrandAndColor(brand, color);
     }
 
     public Bike getBike(Long id) throws BikeNotFoundException {

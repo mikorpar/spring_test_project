@@ -15,7 +15,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 @Validated
 @RestController
@@ -26,8 +25,8 @@ public class BikeController {
     private final BikeService bikeService;
 
     @GetMapping
-    public ResponseEntity<List<Bike>> getBikes(@RequestParam("brand") Optional<String> brand) {
-        return ResponseEntity.ok(bikeService.getAllBikes(brand.orElse("")));
+    public ResponseEntity<List<Bike>> getBikes(@RequestParam(value = "brand", required = false) String brand) {
+        return brand == null ? ResponseEntity.ok(bikeService.getAllBikes()) : ResponseEntity.ok(bikeService.getAllBikesByBrand(brand));
     }
 
     @GetMapping("/{id}")
