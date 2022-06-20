@@ -38,12 +38,15 @@ public class OrderItem implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        OrderItem that = (OrderItem) o;
-        return salesOrder.equals(that.salesOrder) && bike.equals(that.bike) && quantity.equals(that.quantity);
+        OrderItem orderItem = (OrderItem) o;
+        return Objects.equals(id, orderItem.id) &&
+                salesOrder.equals(orderItem.salesOrder) &&
+                bike.equals(orderItem.bike) &&
+                quantity.equals(orderItem.quantity);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(salesOrder, bike, quantity);
+        return Objects.hash(id, salesOrder, bike, quantity);
     }
 }

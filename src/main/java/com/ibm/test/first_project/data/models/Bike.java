@@ -38,13 +38,18 @@ public class Bike {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         Bike bike = (Bike) o;
-        return id != null && Objects.equals(id, bike.id);
+        return id.equals(bike.id) &&
+                name.equals(bike.name) &&
+                brand.equals(bike.brand) &&
+                price.equals(bike.price) &&
+                color.equals(bike.color) &&
+                Objects.equals(items, bike.items);
     }
 
     @Override
     public int hashCode() {
-        return getClass().hashCode();
+        return Objects.hash(id, name, brand, price, color, items);
     }
 }
