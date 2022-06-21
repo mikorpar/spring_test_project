@@ -17,10 +17,9 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.csrf().disable();
         http.authorizeRequests().antMatchers("/login", "/error", "/h2-console/**").permitAll()
                 .and().authorizeRequests().anyRequest().authenticated().and().httpBasic()
-                .and().csrf().ignoringAntMatchers("/login", "/h2-console/**")
-                .and().csrf().ignoringAntMatchers("/bikes/**", "/orders/**") // TODO delete after security part is implemented
                 .and().headers().frameOptions().sameOrigin();
 
         return http.build();
