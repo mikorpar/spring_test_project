@@ -1,7 +1,7 @@
 package com.ibm.test.first_project.services;
 
-import com.ibm.test.first_project.data.dtos.BikeCreateReqDTO;
-import com.ibm.test.first_project.data.dtos.BikeUpdateReqDTO;
+import com.ibm.test.first_project.data.dtos.bike.BikeCreateReqDTO;
+import com.ibm.test.first_project.data.dtos.bike.BikeUpdateReqDTO;
 import com.ibm.test.first_project.data.models.Bike;
 import com.ibm.test.first_project.exceptions.BikeNotFoundException;
 

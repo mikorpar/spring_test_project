@@ -1,6 +1,6 @@
 package com.ibm.test.first_project.controller;
 
-import com.ibm.test.first_project.data.dtos.*;
+import com.ibm.test.first_project.data.dtos.bike.*;
 import com.ibm.test.first_project.exceptions.BikeNotFoundException;
 import com.ibm.test.first_project.services.BikeService;
 import com.ibm.test.first_project.utils.CustomModelMapper;
