@@ -6,6 +6,7 @@ import com.ibm.test.first_project.data.models.Bike;
 import com.ibm.test.first_project.data.repositories.BikeRepository;
 import com.ibm.test.first_project.exceptions.BikeNotFoundException;
 import com.ibm.test.first_project.services.BikeService;
+import com.ibm.test.first_project.utils.CustomModelMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,15 +18,11 @@ public class BikeServiceImpl implements BikeService {
 
     private final BikeRepository bikeRepository;
 
+    private final CustomModelMapper modelMapper;
+
     @Override
     public Bike storeBike(BikeCreateReqDTO bikeDTO) {
-        Bike bike = new Bike();
-        bike.setName(bikeDTO.getName());
-        bike.setBrand(bikeDTO.getBrand());
-        bike.setPrice(bikeDTO.getPrice());
-        bike.setColor(bikeDTO.getColor());
-
-        return bikeRepository.save(bike);
+        return bikeRepository.save(modelMapper.map(bikeDTO, Bike.class));
     }
 
     @Override
