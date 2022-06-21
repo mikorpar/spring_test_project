@@ -31,8 +31,11 @@ public class Bike {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private String brand;
+    @ManyToOne
+    @MapsId("id")
+    @ToString.Exclude
+    @JoinColumn(nullable = false)
+    private Brand brand;
 
     @Column(nullable = false)
     private BigDecimal price;
