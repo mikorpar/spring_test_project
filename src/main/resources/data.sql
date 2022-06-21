@@ -12,7 +12,7 @@ INSERT INTO BIKE (name, brand, price, color) VALUES
 ('Nevada 26 1.9 V-brake', 'Fuji', 3299.99, 'black');
 
 INSERT INTO SALES_ORDER (created_at) VALUES
-('2022-06-18 12:12:00');
+('2022-06-18 12:00:00');
 
 INSERT INTO ORDER_ITEM (bike_id, sales_order_id, quantity) VALUES
 (1, 1, 1),

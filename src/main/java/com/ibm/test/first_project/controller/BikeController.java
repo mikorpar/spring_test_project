@@ -22,19 +22,19 @@ import java.util.List;
 public class BikeController {
 
     private final BikeService bikeService;
-    private final CustomModelMapper customModelMapper;
+    private final CustomModelMapper modelMapper;
 
     @GetMapping
     public ResponseEntity<List<BikeGetResDTO>> getBikes(@RequestParam(value = "brand", required = false) String brand) {
         return brand == null ?
-                ResponseEntity.ok(customModelMapper.mapList(bikeService.getAllBikes(), BikeGetResDTO.class)) :
-                ResponseEntity.ok(customModelMapper.mapList(bikeService.getAllBikes(brand), BikeGetResDTO.class));
+                ResponseEntity.ok(modelMapper.mapList(bikeService.getAllBikes(), BikeGetResDTO.class)) :
+                ResponseEntity.ok(modelMapper.mapList(bikeService.getAllBikes(brand), BikeGetResDTO.class));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<BikeGetResDTO> getBike(@PathVariable("id") Long id) {
         try {
-            return ResponseEntity.ok(customModelMapper.map(bikeService.getBike(id), BikeGetResDTO.class));
+            return ResponseEntity.ok(modelMapper.map(bikeService.getBike(id), BikeGetResDTO.class));
         } catch (BikeNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
@@ -47,13 +47,13 @@ public class BikeController {
                 .path("/bikes")
                 .toUriString());
 
-        return ResponseEntity.created(uri).body(customModelMapper.map(bikeService.storeBike(bike), BikeCreateResDTO.class));
+        return ResponseEntity.created(uri).body(modelMapper.map(bikeService.storeBike(bike), BikeCreateResDTO.class));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<BikeUpdateResDTO> updateBike(@PathVariable("id") Long id, @RequestBody BikeUpdateReqDTO bike) {
         try {
-            return ResponseEntity.ok(customModelMapper.map(bikeService.updateBike(id, bike), BikeUpdateResDTO.class));
+            return ResponseEntity.ok(modelMapper.map(bikeService.updateBike(id, bike), BikeUpdateResDTO.class));
         } catch (BikeNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
