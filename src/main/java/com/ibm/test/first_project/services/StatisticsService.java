@@ -1,6 +1,6 @@
 package com.ibm.test.first_project.services;
 
-import com.ibm.test.first_project.data.dtos.Statistics;
+import com.ibm.test.first_project.data.dtos.statistics.Statistics;
 
 public interface StatisticsService {
 

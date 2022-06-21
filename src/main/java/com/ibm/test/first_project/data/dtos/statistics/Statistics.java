@@ -1,4 +1,4 @@
-package com.ibm.test.first_project.data.dtos;
+package com.ibm.test.first_project.data.dtos.statistics;
 
 import lombok.Data;
 
