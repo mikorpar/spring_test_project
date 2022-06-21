@@ -18,3 +18,14 @@ INSERT INTO ORDER_ITEM (bike_id, sales_order_id, quantity) VALUES
 (1, 1, 1),
 (2, 1, 1),
 (3, 1, 1);
+
+INSERT INTO ROLE (name) VALUES
+('User'),
+('Manager'),
+('Admin');
+
+INSERT INTO APP_USER (username, password, role_id) VALUES
+('johndoe', 'pass1', 1),
+('janedoe', 'pass2', 1),
+('pperic', 'pass3', 1),
+('iivic', 'pass4', 1);
