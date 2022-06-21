@@ -3,77 +3,27 @@ package com.ibm.test.first_project.services;
 import com.ibm.test.first_project.data.dtos.BikeCreateReq;
 import com.ibm.test.first_project.data.dtos.BikeUpdateReq;
 import com.ibm.test.first_project.data.models.Bike;
-import com.ibm.test.first_project.data.repositories.BikeRepository;
 import com.ibm.test.first_project.exceptions.BikeNotFoundException;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-@RequiredArgsConstructor
-public class BikeService {
+public interface BikeService {
 
-    private final BikeRepository bikeRepository;
+    Bike storeBike(BikeCreateReq bikeDTO);
 
-    public Bike storeBike(BikeCreateReq bikeDTO) {
-        Bike bike = new Bike();
-        bike.setName(bikeDTO.getName());
-        bike.setBrand(bikeDTO.getBrand());
-        bike.setPrice(bikeDTO.getPrice());
-        bike.setColor(bikeDTO.getColor());
+    List<Bike> getAllBikes();
 
-        return bikeRepository.save(bike);
-    }
+    List<Bike> getAllBikes(String brand);
 
-    public List<Bike> getAllBikes() {
-        return bikeRepository.findAll();
-    }
+    List<Bike> getAllBikesByBrandOrderedThisYear(String brand);
 
-    public List<Bike> getAllBikes(String brand) {
-        return bikeRepository.findAllByBrand(brand);
-    }
+    List<Bike> getAllBikesByColorOrderedThisYear(String color);
 
-    public List<Bike> getAllBikesByBrandOrderedThisYear(String brand) {
-        return bikeRepository.findAllByBrandAndOrderedThisYear(brand);
-    }
+    List<Bike> getAllBikesByBrandAndColorOrderedThisYear(String brand, String color);
 
-    public List<Bike> getAllBikesByColorOrderedThisYear(String color) {
-        return bikeRepository.findAllByColorAndOrderedThisYear(color);
-    }
+    Bike getBike(Long id) throws BikeNotFoundException;
 
-    public List<Bike> getAllBikesByBrandAndColorOrderedThisYear(String brand, String color) {
-        return bikeRepository.findAllByBrandAndColorAndOrderedThisYear(brand, color);
-    }
+    Bike updateBike(Long id, BikeUpdateReq bikeDTO) throws BikeNotFoundException;
 
-    public Bike getBike(Long id) throws BikeNotFoundException {
-        return bikeRepository
-                .findById(id)
-                .orElseThrow(() -> new BikeNotFoundException(String.format("Bike with id: '%d' not found.", id)));
-    }
-
-    public Bike updateBike(Long id, BikeUpdateReq bikeDTO) throws BikeNotFoundException {
-        Bike bike = bikeRepository
-                .findById(id)
-                .orElseThrow(() -> new BikeNotFoundException(String.format("Bike with id: '%d' not found.", id)));
-
-        bike.setName(bikeDTO.getName());
-        bike.setBrand(bikeDTO.getBrand());
-        bike.setPrice(bikeDTO.getPrice());
-        bike.setColor(bikeDTO.getColor());
-
-        return bikeRepository.save(bike);
-    }
-
-    public void deleteBike(Long id) throws BikeNotFoundException {
-        if (!bikeRepository.existsById(id)) {
-            throw new BikeNotFoundException(String.format("Bike with id: '%d' not found.", id));
-        }
-
-        bikeRepository.deleteById(id);
-    }
-
-    public List<Bike> test() {
-        return bikeRepository.findAllByBrandAndColorAndOrderedThisYear("Scott", "green");
-    }
+    void deleteBike(Long id) throws BikeNotFoundException;
 }

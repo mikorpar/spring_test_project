@@ -4,7 +4,7 @@
  import com.ibm.test.first_project.data.dtos.OrderItemCreateReq;
  import com.ibm.test.first_project.data.models.SalesOrder;
  import com.ibm.test.first_project.services.SalesOrderService;
- import lombok.RequiredArgsConstructor;
+ import org.springframework.beans.factory.annotation.Autowired;
  import org.springframework.http.ResponseEntity;
  import org.springframework.web.bind.annotation.*;
 
@@ -13,10 +13,10 @@
 
 @RestController
 @RequestMapping("/orders")
-@RequiredArgsConstructor
 public class OrderController {
 
-    private final SalesOrderService salesOrderService;
+    @Autowired
+    private SalesOrderService salesOrderService;
 
     @PostMapping
     public ResponseEntity<SalesOrder> createReceipt(@RequestBody List<OrderItemCreateReq> items) {

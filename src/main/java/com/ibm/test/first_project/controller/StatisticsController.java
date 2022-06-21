@@ -2,7 +2,7 @@ package com.ibm.test.first_project.controller;
 
 import com.ibm.test.first_project.data.dtos.Statistics;
 import com.ibm.test.first_project.services.StatisticsService;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,10 +13,10 @@ import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/statistics")
-@RequiredArgsConstructor
 public class StatisticsController {
 
-    private final StatisticsService statisticsService;
+    @Autowired
+    private StatisticsService statisticsService;
 
     @GetMapping
     public ResponseEntity<Statistics> getTotalSalesIncome(

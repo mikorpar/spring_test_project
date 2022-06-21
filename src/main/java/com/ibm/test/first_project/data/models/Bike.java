@@ -22,16 +22,21 @@ import java.util.Objects;
 })
 @Entity
 public class Bike {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long id;
+
     @Column(nullable = false)
     private String name;
+
     @Column(nullable = false)
     private String brand;
+
     @Column(nullable = false)
     private BigDecimal price;
+
     @Column(nullable = false)
     private String color;
 

@@ -5,7 +5,7 @@ import com.ibm.test.first_project.data.dtos.BikeUpdateReq;
 import com.ibm.test.first_project.data.models.Bike;
 import com.ibm.test.first_project.exceptions.BikeNotFoundException;
 import com.ibm.test.first_project.services.BikeService;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -19,10 +19,10 @@ import java.util.List;
 @Validated
 @RestController
 @RequestMapping("/bikes")
-@RequiredArgsConstructor
 public class BikeController {
 
-    private final BikeService bikeService;
+    @Autowired
+    private BikeService bikeService;
 
     @GetMapping
     public ResponseEntity<List<Bike>> getBikes(@RequestParam(value = "brand", required = false) String brand) {
@@ -70,10 +70,5 @@ public class BikeController {
         }
 
         return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("/test")
-    public ResponseEntity<List<Bike>> test() {
-        return ResponseEntity.ok(bikeService.test());
     }
 }
