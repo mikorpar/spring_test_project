@@ -17,7 +17,8 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Table(indexes = {
         @Index(columnList = "brand"),
-        @Index(columnList = "color")
+        @Index(columnList = "color"),
+        @Index(columnList = "brand, color")
 })
 @Entity
 public class Bike {
