@@ -1,9 +1,10 @@
 package com.ibm.test.first_project.data.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.*;
-import org.hibernate.Hibernate;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -14,7 +15,10 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@Table
+@Table(indexes = {
+        @Index(columnList = "brand"),
+        @Index(columnList = "color")
+})
 @Entity
 public class Bike {
     @Id
