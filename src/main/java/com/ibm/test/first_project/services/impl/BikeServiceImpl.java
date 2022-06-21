@@ -1,9 +1,14 @@
 package com.ibm.test.first_project.services.impl;
 
+import com.fasterxml.jackson.annotation.ObjectIdGenerator;
 import com.ibm.test.first_project.data.dtos.bike.BikeCreateReqDTO;
 import com.ibm.test.first_project.data.dtos.bike.BikeUpdateReqDTO;
 import com.ibm.test.first_project.data.models.Bike;
+import com.ibm.test.first_project.data.models.Brand;
+import com.ibm.test.first_project.data.models.Color;
 import com.ibm.test.first_project.data.repositories.BikeRepository;
+import com.ibm.test.first_project.data.repositories.BrandRepository;
+import com.ibm.test.first_project.data.repositories.ColorRepository;
 import com.ibm.test.first_project.exceptions.BikeNotFoundException;
 import com.ibm.test.first_project.services.BikeService;
 import lombok.RequiredArgsConstructor;
@@ -17,13 +22,16 @@ public class BikeServiceImpl implements BikeService {
 
     private final BikeRepository bikeRepository;
 
+    private final BrandRepository brandRepository;
+
     @Override
     public Bike storeBike(BikeCreateReqDTO bikeDTO) {
         Bike bike = new Bike();
+
         bike.setName(bikeDTO.getName());
-        bike.setBrand(bikeDTO.getBrand());
+        bike.setBrand(new Brand(bikeDTO.getBrand()));
         bike.setPrice(bikeDTO.getPrice());
-        bike.setColor(bikeDTO.getColor());
+        bike.setColor(new Color(bikeDTO.getColor()));
 
         return bikeRepository.save(bike);
     }
@@ -35,7 +43,7 @@ public class BikeServiceImpl implements BikeService {
 
     @Override
     public List<Bike> getAllBikes(String brand) {
-        return bikeRepository.findAllByBrand(brand);
+        return brandRepository.findByName(brand).getBikes();
     }
 
     @Override
@@ -67,9 +75,9 @@ public class BikeServiceImpl implements BikeService {
                 .orElseThrow(() -> new BikeNotFoundException(String.format("Bike with id: '%d' not found.", id)));
 
         bike.setName(bikeDTO.getName());
-        bike.setBrand(bikeDTO.getBrand());
+        bike.setBrand(new Brand(bikeDTO.getBrand()));
         bike.setPrice(bikeDTO.getPrice());
-        bike.setColor(bikeDTO.getColor());
+        bike.setColor(new Color(bikeDTO.getColor()));
 
         return bikeRepository.save(bike);
     }

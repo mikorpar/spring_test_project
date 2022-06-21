@@ -15,11 +15,13 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-@Table(indexes = {
-        @Index(columnList = "brand"),
-        @Index(columnList = "color"),
-        @Index(columnList = "brand, color")
-})
+// TODO enable when implementation is done
+//@Table(indexes = {
+//        @Index(columnList = "brand"),
+//        @Index(columnList = "color"),
+//        @Index(columnList = "brand, color")
+//})
+@Table
 @Entity
 public class Bike {
 
@@ -31,7 +33,7 @@ public class Bike {
     @Column(nullable = false)
     private String name;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @MapsId("id")
     @ToString.Exclude
     @JoinColumn(nullable = false)
@@ -40,8 +42,11 @@ public class Bike {
     @Column(nullable = false)
     private BigDecimal price;
 
-    @Column(nullable = false)
-    private String color;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @MapsId("id")
+    @ToString.Exclude
+    @JoinColumn(nullable = false)
+    private Color color;
 
     @OneToMany(mappedBy = "bike")
     @ToString.Exclude
