@@ -53,8 +53,8 @@ INSERT INTO ROLE (name) VALUES
 ('Manager'),
 ('Admin');
 
-INSERT INTO APP_USER (username, password, role_id) VALUES
-('johndoe', 'pass1', 1),
-('janedoe', 'pass2', 1),
-('pperic', 'pass3', 1),
-('iivic', 'pass4', 1);
+INSERT INTO APP_USER (username, password, locked, enabled, role_id) VALUES
+('johndoe', 'pass1', false, true, 1),
+('janedoe', 'pass2', false, true, 1),
+('pperic', 'pass3', false, true, 1),
+('iivic', 'pass4', false, true, 1);
