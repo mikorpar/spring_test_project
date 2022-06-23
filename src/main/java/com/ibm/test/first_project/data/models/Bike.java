@@ -15,13 +15,11 @@ import java.util.Objects;
 @Setter
 @ToString
 @RequiredArgsConstructor
-// TODO enable when implementation is done
-//@Table(indexes = {
-//        @Index(columnList = "brand"),
-//        @Index(columnList = "color"),
-//        @Index(columnList = "brand, color")
-//})
-@Table
+@Table(indexes = {
+        @Index(columnList = "brand_id"),
+        @Index(columnList = "color_id"),
+        @Index(columnList = "brand_id, color_id")
+})
 @Entity
 public class Bike {
 
