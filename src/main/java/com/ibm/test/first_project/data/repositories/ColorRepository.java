@@ -3,6 +3,9 @@ package com.ibm.test.first_project.data.repositories;
 import com.ibm.test.first_project.data.models.Color;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import javax.swing.text.html.Option;
+import java.util.Optional;
+
 public interface ColorRepository extends JpaRepository<Color, Long> {
-    Color findByName(String name);
+    Optional<Color> findByName(String name);
 }

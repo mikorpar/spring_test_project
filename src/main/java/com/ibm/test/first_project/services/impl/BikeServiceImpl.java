@@ -1,6 +1,5 @@
 package com.ibm.test.first_project.services.impl;
 
-import com.fasterxml.jackson.annotation.ObjectIdGenerator;
 import com.ibm.test.first_project.data.dtos.bike.BikeCreateReqDTO;
 import com.ibm.test.first_project.data.dtos.bike.BikeUpdateReqDTO;
 import com.ibm.test.first_project.data.models.Bike;
@@ -30,19 +29,11 @@ public class BikeServiceImpl implements BikeService {
     public Bike storeBike(BikeCreateReqDTO bikeDTO) {
         Bike bike = new Bike();
 
-        Brand brand = brandRepository.findByName(bikeDTO.getBrand());
-        if (brand == null) {
-            brand = new Brand();
-            brand.setName(bikeDTO.getBrand());
-            brand = brandRepository.save(brand);
-        }
+        Brand brand = brandRepository.findByName(bikeDTO.getBrand()).
+                orElse(brandRepository.save(new Brand(bikeDTO.getBrand())));
 
-        Color color = colorRepository.findByName(bikeDTO.getColor());
-        if (color == null) {
-            color = new Color();
-            color.setName(bikeDTO.getColor());
-            color = colorRepository.save(color);
-        }
+        Color color = colorRepository.findByName(bikeDTO.getColor()).
+                orElse(colorRepository.save(new Color(bikeDTO.getColor())));
 
         bike.setName(bikeDTO.getName());
         bike.setBrand(brand);
@@ -90,19 +81,11 @@ public class BikeServiceImpl implements BikeService {
                 .findById(id)
                 .orElseThrow(() -> new BikeNotFoundException(String.format("Bike with id: '%d' not found.", id)));
 
-        Brand brand = brandRepository.findByName(bikeDTO.getBrand());
-        if (brand == null) {
-            brand = new Brand();
-            brand.setName(bikeDTO.getBrand());
-            brand = brandRepository.save(brand);
-        }
+        Brand brand = brandRepository.findByName(bikeDTO.getBrand()).
+                orElse(brandRepository.save(new Brand(bikeDTO.getBrand())));
 
-        Color color = colorRepository.findByName(bikeDTO.getColor());
-        if (color == null) {
-            color = new Color();
-            color.setName(bikeDTO.getColor());
-            color = colorRepository.save(color);
-        }
+        Color color = colorRepository.findByName(bikeDTO.getColor()).
+                orElse(colorRepository.save(new Color(bikeDTO.getColor())));
 
         bike.setName(bikeDTO.getName());
         bike.setBrand(brand);
