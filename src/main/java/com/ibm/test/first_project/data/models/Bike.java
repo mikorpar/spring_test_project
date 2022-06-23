@@ -16,9 +16,9 @@ import java.util.Objects;
 @ToString
 @RequiredArgsConstructor
 @Table(indexes = {
-        @Index(columnList = "brand"),
-        @Index(columnList = "color"),
-        @Index(columnList = "brand, color")
+        @Index(columnList = "brand_id"),
+        @Index(columnList = "color_id"),
+        @Index(columnList = "brand_id, color_id")
 })
 @Entity
 public class Bike {
@@ -31,14 +31,18 @@ public class Bike {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private String brand;
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @ToString.Exclude
+    @JoinColumn(name = "brand_id", nullable = false)
+    private Brand brand;
 
     @Column(nullable = false)
     private BigDecimal price;
 
-    @Column(nullable = false)
-    private String color;
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @ToString.Exclude
+    @JoinColumn(name = "color_id", nullable = false)
+    private Color color;
 
     @OneToMany(mappedBy = "bike")
     @ToString.Exclude
@@ -60,6 +64,6 @@ public class Bike {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, brand, price, color, items);
+        return Objects.hash(id, name, brand, price, color , items);
     }
 }

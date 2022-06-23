@@ -1,6 +1,6 @@
 package com.ibm.test.first_project.services.impl;
 
-import com.ibm.test.first_project.data.dtos.Statistics;
+import com.ibm.test.first_project.data.dtos.statistics.Statistics;
 import com.ibm.test.first_project.data.models.Bike;
 import com.ibm.test.first_project.data.models.OrderItem;
 import com.ibm.test.first_project.data.models.SalesOrder;

@@ -1,6 +1,6 @@
 package com.ibm.test.first_project.services.impl;
 
-import com.ibm.test.first_project.data.dtos.OrderItemCreateReq;
+import com.ibm.test.first_project.data.dtos.sales_order.OrderItemCreateReqDTO;
 import com.ibm.test.first_project.data.models.SalesOrder;
 import com.ibm.test.first_project.data.models.OrderItem;
 import com.ibm.test.first_project.data.repositories.SalesOrderRepository;
@@ -24,13 +24,13 @@ public class SalesOrderServiceImpl implements SalesOrderService {
 
     @Override
     @Transactional
-    public SalesOrder storeOrder(List<OrderItemCreateReq> itemsDTO) {
+    public SalesOrder storeOrder(List<OrderItemCreateReqDTO> itemsDTO) {
         SalesOrder salesOrder = new SalesOrder();
         salesOrderRepository.save(salesOrder);
 
         List<OrderItem> orderItems = new ArrayList<>();
 
-        for (OrderItemCreateReq itemDTO : itemsDTO) {
+        for (OrderItemCreateReqDTO itemDTO : itemsDTO) {
             OrderItem orderItem = new OrderItem();
             orderItem.setSalesOrder(salesOrder);
             orderItem.setBike(itemDTO.getBike());

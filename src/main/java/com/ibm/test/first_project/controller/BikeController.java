@@ -1,11 +1,10 @@
 package com.ibm.test.first_project.controller;
 
-import com.ibm.test.first_project.data.dtos.BikeCreateReq;
-import com.ibm.test.first_project.data.dtos.BikeUpdateReq;
-import com.ibm.test.first_project.data.models.Bike;
+import com.ibm.test.first_project.data.dtos.bike.*;
 import com.ibm.test.first_project.exceptions.BikeNotFoundException;
 import com.ibm.test.first_project.services.BikeService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.ibm.test.first_project.utils.CustomModelMapper;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -19,46 +18,45 @@ import java.util.List;
 @Validated
 @RestController
 @RequestMapping("/bikes")
+@RequiredArgsConstructor
 public class BikeController {
 
-    @Autowired
-    private BikeService bikeService;
+    private final BikeService bikeService;
+    private final CustomModelMapper modelMapper;
 
     @GetMapping
-    public ResponseEntity<List<Bike>> getBikes(@RequestParam(value = "brand", required = false) String brand) {
-        return brand == null ? ResponseEntity.ok(bikeService.getAllBikes()) : ResponseEntity.ok(bikeService.getAllBikes(brand));
+    public ResponseEntity<List<BikeGetResDTO>> getBikes(@RequestParam(value = "brand", required = false) String brand) {
+        return brand == null ?
+                ResponseEntity.ok(modelMapper.mapList(bikeService.getAllBikes(), BikeGetResDTO.class)) :
+                ResponseEntity.ok(modelMapper.mapList(bikeService.getAllBikes(brand), BikeGetResDTO.class));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Bike> getBike(@PathVariable("id") Long id) {
+    public ResponseEntity<BikeGetResDTO> getBike(@PathVariable("id") Long id) {
         try {
-            return ResponseEntity.ok(bikeService.getBike(id));
+            return ResponseEntity.ok(modelMapper.map(bikeService.getBike(id), BikeGetResDTO.class));
         } catch (BikeNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
 
     @PostMapping
-    public ResponseEntity<Bike> createBike(@RequestBody BikeCreateReq bike) {
+    public ResponseEntity<BikeCreateResDTO> createBike(@RequestBody BikeCreateReqDTO bike) {
         URI uri = URI.create(ServletUriComponentsBuilder
                 .fromCurrentContextPath()
                 .path("/bikes")
                 .toUriString());
 
-        return ResponseEntity.created(uri).body(bikeService.storeBike(bike));
+        return ResponseEntity.created(uri).body(modelMapper.map(bikeService.storeBike(bike), BikeCreateResDTO.class));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Bike> updateBike(@PathVariable("id") Long id, @RequestBody BikeUpdateReq bike) {
-        Bike updatedBike;
-
+    public ResponseEntity<BikeUpdateResDTO> updateBike(@PathVariable("id") Long id, @RequestBody BikeUpdateReqDTO bike) {
         try {
-            updatedBike = bikeService.updateBike(id, bike);
+            return ResponseEntity.ok(modelMapper.map(bikeService.updateBike(id, bike), BikeUpdateResDTO.class));
         } catch (BikeNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
-
-        return ResponseEntity.ok(updatedBike);
     }
 
     @DeleteMapping("/{id}")

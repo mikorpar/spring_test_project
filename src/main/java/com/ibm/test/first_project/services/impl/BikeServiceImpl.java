@@ -1,11 +1,16 @@
 package com.ibm.test.first_project.services.impl;
 
-import com.ibm.test.first_project.data.dtos.BikeCreateReq;
-import com.ibm.test.first_project.data.dtos.BikeUpdateReq;
+import com.ibm.test.first_project.data.dtos.bike.BikeCreateReqDTO;
+import com.ibm.test.first_project.data.dtos.bike.BikeUpdateReqDTO;
 import com.ibm.test.first_project.data.models.Bike;
+import com.ibm.test.first_project.data.models.Brand;
+import com.ibm.test.first_project.data.models.Color;
 import com.ibm.test.first_project.data.repositories.BikeRepository;
+import com.ibm.test.first_project.data.repositories.BrandRepository;
+import com.ibm.test.first_project.data.repositories.ColorRepository;
 import com.ibm.test.first_project.exceptions.BikeNotFoundException;
 import com.ibm.test.first_project.services.BikeService;
+import com.ibm.test.first_project.utils.CustomModelMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,13 +22,24 @@ public class BikeServiceImpl implements BikeService {
 
     private final BikeRepository bikeRepository;
 
+    private final BrandRepository brandRepository;
+
+    private final ColorRepository colorRepository;
+
+    private final CustomModelMapper modelMapper;
+
     @Override
-    public Bike storeBike(BikeCreateReq bikeDTO) {
-        Bike bike = new Bike();
-        bike.setName(bikeDTO.getName());
-        bike.setBrand(bikeDTO.getBrand());
-        bike.setPrice(bikeDTO.getPrice());
-        bike.setColor(bikeDTO.getColor());
+    public Bike storeBike(BikeCreateReqDTO bikeDTO) {
+        Bike bike = modelMapper.map(bikeDTO, Bike.class);
+
+        Brand brand = brandRepository.findByName(bikeDTO.getBrand()).
+                orElse(brandRepository.save(new Brand(bikeDTO.getBrand())));
+
+        Color color = colorRepository.findByName(bikeDTO.getColor()).
+                orElse(colorRepository.save(new Color(bikeDTO.getColor())));
+
+        bike.setBrand(brand);
+        bike.setColor(color);
 
         return bikeRepository.save(bike);
     }
@@ -35,7 +51,7 @@ public class BikeServiceImpl implements BikeService {
 
     @Override
     public List<Bike> getAllBikes(String brand) {
-        return bikeRepository.findAllByBrand(brand);
+        return bikeRepository.findAllByBrandName(brand);
     }
 
     @Override
@@ -61,15 +77,21 @@ public class BikeServiceImpl implements BikeService {
     }
 
     @Override
-    public Bike updateBike(Long id, BikeUpdateReq bikeDTO) throws BikeNotFoundException {
+    public Bike updateBike(Long id, BikeUpdateReqDTO bikeDTO) throws BikeNotFoundException {
         Bike bike = bikeRepository
                 .findById(id)
                 .orElseThrow(() -> new BikeNotFoundException(String.format("Bike with id: '%d' not found.", id)));
 
+        Brand brand = brandRepository.findByName(bikeDTO.getBrand()).
+                orElse(brandRepository.save(new Brand(bikeDTO.getBrand())));
+
+        Color color = colorRepository.findByName(bikeDTO.getColor()).
+                orElse(colorRepository.save(new Color(bikeDTO.getColor())));
+
         bike.setName(bikeDTO.getName());
-        bike.setBrand(bikeDTO.getBrand());
         bike.setPrice(bikeDTO.getPrice());
-        bike.setColor(bikeDTO.getColor());
+        bike.setBrand(brand);
+        bike.setColor(color);
 
         return bikeRepository.save(bike);
     }
