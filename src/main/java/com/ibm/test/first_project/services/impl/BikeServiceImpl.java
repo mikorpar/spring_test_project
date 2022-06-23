@@ -10,6 +10,7 @@ import com.ibm.test.first_project.data.repositories.BrandRepository;
 import com.ibm.test.first_project.data.repositories.ColorRepository;
 import com.ibm.test.first_project.exceptions.BikeNotFoundException;
 import com.ibm.test.first_project.services.BikeService;
+import com.ibm.test.first_project.utils.CustomModelMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,9 +26,11 @@ public class BikeServiceImpl implements BikeService {
 
     private final ColorRepository colorRepository;
 
+    private final CustomModelMapper modelMapper;
+
     @Override
     public Bike storeBike(BikeCreateReqDTO bikeDTO) {
-        Bike bike = new Bike();
+        Bike bike = modelMapper.map(bikeDTO, Bike.class);
 
         Brand brand = brandRepository.findByName(bikeDTO.getBrand()).
                 orElse(brandRepository.save(new Brand(bikeDTO.getBrand())));
@@ -35,9 +38,7 @@ public class BikeServiceImpl implements BikeService {
         Color color = colorRepository.findByName(bikeDTO.getColor()).
                 orElse(colorRepository.save(new Color(bikeDTO.getColor())));
 
-        bike.setName(bikeDTO.getName());
         bike.setBrand(brand);
-        bike.setPrice(bikeDTO.getPrice());
         bike.setColor(color);
 
         return bikeRepository.save(bike);
@@ -88,8 +89,8 @@ public class BikeServiceImpl implements BikeService {
                 orElse(colorRepository.save(new Color(bikeDTO.getColor())));
 
         bike.setName(bikeDTO.getName());
-        bike.setBrand(brand);
         bike.setPrice(bikeDTO.getPrice());
+        bike.setBrand(brand);
         bike.setColor(color);
 
         return bikeRepository.save(bike);
