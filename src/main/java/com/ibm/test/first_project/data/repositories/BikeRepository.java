@@ -13,20 +13,20 @@ public interface BikeRepository extends JpaRepository<Bike,Long> {
     @Query(value = "SELECT B FROM Bike AS B " +
             "JOIN OrderItem AS OI ON B.id = OI.id.bikeId " +
             "JOIN SalesOrder SA ON SA.id = OI.id.orderId " +
-            "WHERE B.brand = ?1 AND B.color = ?2 AND " +
+            "WHERE B.brand.name = ?1 AND B.color.name = ?2 AND " +
             "YEAR (SA.createdAt) >= YEAR (CURRENT_DATE) AND YEAR (SA.createdAt) < YEAR (CURRENT_DATE) + 1")
     List<Bike> findAllByBrandAndColorAndOrderedThisYear(String brand, String color);
 
     @Query(value = "SELECT B FROM Bike AS B " +
             "JOIN OrderItem AS OI ON B.id = OI.id.bikeId " +
             "JOIN SalesOrder SA ON SA.id = OI.id.orderId " +
-            "WHERE B.brand = ?1 AND YEAR (SA.createdAt) >= YEAR (CURRENT_DATE) AND YEAR (SA.createdAt) < YEAR (CURRENT_DATE) + 1")
+            "WHERE B.brand.name = ?1 AND YEAR (SA.createdAt) >= YEAR (CURRENT_DATE) AND YEAR (SA.createdAt) < YEAR (CURRENT_DATE) + 1")
     List<Bike> findAllByBrandAndOrderedThisYear(String color);
 
     @Query(value = "SELECT B FROM Bike AS B " +
             "JOIN OrderItem AS OI ON B.id = OI.id.bikeId " +
             "JOIN SalesOrder SA ON SA.id = OI.id.orderId " +
-            "WHERE B.color = ?1 AND " +
+            "WHERE B.color.name = ?1 AND " +
             "YEAR (SA.createdAt) >= YEAR (CURRENT_DATE) AND YEAR (SA.createdAt) < YEAR (CURRENT_DATE) + 1")
     List<Bike> findAllByColorAndOrderedThisYear(String color);
 }
