@@ -33,19 +33,17 @@ public class Bike {
     @Column(nullable = false)
     private String name;
 
-    @ManyToOne(cascade = CascadeType.ALL, optional = false, targetEntity = Brand.class)
-//    @MapsId("id")
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
     @ToString.Exclude
-    @JoinColumn(name = "brand_id", nullable = false, updatable = false, insertable = true)
+    @JoinColumn(name = "brand_id", nullable = false)
     private Brand brand;
 
     @Column(nullable = false)
     private BigDecimal price;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @MapsId("id")
+    @ManyToOne(cascade = CascadeType.ALL, optional = false)
     @ToString.Exclude
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "color_id", nullable = false)
     private Color color;
 
     @OneToMany(mappedBy = "bike")

@@ -69,10 +69,4 @@ public class BikeController {
 
         return ResponseEntity.ok().build();
     }
-
-    @GetMapping("/test")
-    public String test() {
-        bikeService.testStoreColor();
-        return "OK";
-    }
 }
