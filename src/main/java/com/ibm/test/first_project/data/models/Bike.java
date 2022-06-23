@@ -33,10 +33,10 @@ public class Bike {
     @Column(nullable = false)
     private String name;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @MapsId("id")
+    @ManyToOne(cascade = CascadeType.ALL, optional = false, targetEntity = Brand.class)
+//    @MapsId("id")
     @ToString.Exclude
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "brand_id", nullable = false, updatable = false, insertable = true)
     private Brand brand;
 
     @Column(nullable = false)
@@ -68,6 +68,6 @@ public class Bike {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, brand, price, color, items);
+        return Objects.hash(id, name, brand, price, color , items);
     }
 }

@@ -26,4 +26,8 @@ public interface BikeService {
     Bike updateBike(Long id, BikeUpdateReqDTO bikeDTO) throws BikeNotFoundException;
 
     void deleteBike(Long id) throws BikeNotFoundException;
+
+    public void testStoreColor ();
+
+    public void testStoreBrand ();
 }

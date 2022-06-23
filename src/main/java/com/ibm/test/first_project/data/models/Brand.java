@@ -1,12 +1,12 @@
 package com.ibm.test.first_project.data.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -25,15 +25,11 @@ public class Brand {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
 
     @Column(nullable = false, unique = true)
     private String name;
-
-    @OneToMany(mappedBy = "brand")
-    @ToString.Exclude
-    @JsonIgnore
-    private List<Bike> bikes;
 
     @Override
     public boolean equals(Object o) {

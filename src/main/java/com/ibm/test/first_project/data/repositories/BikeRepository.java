@@ -8,7 +8,8 @@ import java.util.List;
 
 public interface BikeRepository extends JpaRepository<Bike,Long> {
     List<Bike> findAll();
-    List<Bike> findAllByBrand(String brand);
+
+    List<Bike> findAllByBrandName(String brand);
 
     @Query(value = "SELECT B FROM Bike AS B " +
             "JOIN OrderItem AS OI ON B.id = OI.id.bikeId " +
