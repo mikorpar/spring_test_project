@@ -29,8 +29,6 @@ public class SalesOrderServiceImpl implements SalesOrderService {
 
     private final BikeService bikeService;
 
-    private final CustomModelMapper modelMapper;
-
     @Override
     @Transactional
     public SalesOrder storeOrder(List<OrderItemCreateReqDTO> itemsDTO) throws BikeNotFoundException {

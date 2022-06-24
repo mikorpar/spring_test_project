@@ -3,7 +3,11 @@ package com.ibm.test.first_project.utils;
 import com.ibm.test.first_project.data.dtos.bike.BikeCreateResDTO;
 import com.ibm.test.first_project.data.dtos.bike.BikeGetResDTO;
 import com.ibm.test.first_project.data.dtos.bike.BikeUpdateResDTO;
+import com.ibm.test.first_project.data.dtos.sales_order.OrderItemCreateReqDTO;
 import com.ibm.test.first_project.data.models.Bike;
+import com.ibm.test.first_project.data.models.OrderItem;
+import com.ibm.test.first_project.data.repositories.BikeRepository;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -11,7 +15,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
 public class CustomModelMapper extends ModelMapper {
+
     public CustomModelMapper() {
         defineCustomMapping();
     }
@@ -43,11 +49,6 @@ public class CustomModelMapper extends ModelMapper {
                     BikeUpdateResDTO::setBrand);
             mapper.map(src -> src.getColor().getName(),
                     BikeUpdateResDTO::setColor);
-        });
-
-        this.typeMap(BikeReqDTO.class, Bike.class).addMappings(mapper -> {
-            mapper.skip(Bike::setBrand);
-            mapper.skip(Bike::setColor);
         });
     }
 }
