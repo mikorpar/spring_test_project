@@ -12,5 +12,5 @@ public class SalesOrderGetResDTO {
     private Long id;
     private Instant createdAt;
     private BigDecimal totalPrice;
-    private List<OrderItem> items;
+    private List<OrderItemResDTO> items;
 }
