@@ -1,10 +1,15 @@
 package com.ibm.test.first_project.services.impl;
 
 import com.ibm.test.first_project.data.dtos.sales_order.OrderItemCreateReqDTO;
+import com.ibm.test.first_project.data.models.Bike;
+import com.ibm.test.first_project.data.models.OrderItemKey;
 import com.ibm.test.first_project.data.models.SalesOrder;
 import com.ibm.test.first_project.data.models.OrderItem;
 import com.ibm.test.first_project.data.repositories.SalesOrderRepository;
+import com.ibm.test.first_project.exceptions.BikeNotFoundException;
+import com.ibm.test.first_project.services.BikeService;
 import com.ibm.test.first_project.services.SalesOrderService;
+import com.ibm.test.first_project.utils.CustomModelMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,9 +27,13 @@ public class SalesOrderServiceImpl implements SalesOrderService {
 
     private final SalesOrderRepository salesOrderRepository;
 
+    private final BikeService bikeService;
+
+    private final CustomModelMapper modelMapper;
+
     @Override
     @Transactional
-    public SalesOrder storeOrder(List<OrderItemCreateReqDTO> itemsDTO) {
+    public SalesOrder storeOrder(List<OrderItemCreateReqDTO> itemsDTO) throws BikeNotFoundException {
         SalesOrder salesOrder = new SalesOrder();
         salesOrderRepository.save(salesOrder);
 
@@ -32,8 +41,9 @@ public class SalesOrderServiceImpl implements SalesOrderService {
 
         for (OrderItemCreateReqDTO itemDTO : itemsDTO) {
             OrderItem orderItem = new OrderItem();
+
             orderItem.setSalesOrder(salesOrder);
-            orderItem.setBike(itemDTO.getBike());
+            orderItem.setBike(bikeService.getBike(itemDTO.getBikeId()));
             orderItem.setQuantity(itemDTO.getQuantity());
 
             orderItems.add(orderItem);

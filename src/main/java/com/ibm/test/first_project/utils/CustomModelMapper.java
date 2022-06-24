@@ -44,5 +44,10 @@ public class CustomModelMapper extends ModelMapper {
             mapper.map(src -> src.getColor().getName(),
                     BikeUpdateResDTO::setColor);
         });
+
+        this.typeMap(BikeReqDTO.class, Bike.class).addMappings(mapper -> {
+            mapper.skip(Bike::setBrand);
+            mapper.skip(Bike::setColor);
+        });
     }
 }

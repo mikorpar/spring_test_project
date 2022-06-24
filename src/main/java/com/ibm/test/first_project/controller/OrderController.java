@@ -7,8 +7,10 @@
  import com.ibm.test.first_project.services.SalesOrderService;
  import com.ibm.test.first_project.utils.CustomModelMapper;
  import lombok.RequiredArgsConstructor;
+ import org.springframework.http.HttpStatus;
  import org.springframework.http.ResponseEntity;
  import org.springframework.web.bind.annotation.*;
+ import org.springframework.web.server.ResponseStatusException;
 
  import java.time.LocalDate;
  import java.util.List;
@@ -23,7 +25,11 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity<SalesOrderPostResDTO> createOrder(@RequestBody List<OrderItemCreateReqDTO> items) {
-        return ResponseEntity.ok(modelMapper.map(salesOrderService.storeOrder(items), SalesOrderPostResDTO.class));
+        try {
+            return ResponseEntity.ok(modelMapper.map(salesOrderService.storeOrder(items), SalesOrderPostResDTO.class));
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,  e.getMessage());
+        }
     }
 
     @GetMapping
