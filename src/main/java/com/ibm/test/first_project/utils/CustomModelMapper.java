@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
-@RequiredArgsConstructor
 public class CustomModelMapper extends ModelMapper {
 
     public CustomModelMapper() {
