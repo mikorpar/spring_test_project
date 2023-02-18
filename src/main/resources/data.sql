@@ -36,12 +36,11 @@ INSERT INTO ORDER_ITEM (bike_id, sales_order_id, quantity) VALUES
 (3, 1, 1);
 
 INSERT INTO ROLE (name) VALUES
-('User'),
-('Manager'),
-('Admin');
+('CUSTOMER'),
+('MANAGER');
 
 INSERT INTO APP_USER (username, password, locked, enabled, role_id) VALUES
 ('johndoe', '$2a$12$6bCIsO178dVODCYjDvP09eEAtwbEDbAxXKF0lB4snGYG/UKTHne2q', false, true, 1), --pass1
 ('janedoe', '$2a$12$PuOOl6jfXDB/GIZHdqr1Her4KA1QvLXDY8YreNWcnfl1YFvpY4tDq', false, true, 1), --pass2
-('pperic', '$2a$12$TE6SbiT.cLBIxMD17XAB/Od1dyYjezrdGlYycnUTERSED6p4MIxSq', false, true, 1), --pass3
+('pperic', '$2a$12$TE6SbiT.cLBIxMD17XAB/Od1dyYjezrdGlYycnUTERSED6p4MIxSq', false, true, 2), --pass3
 ('iivic', '$2a$12$S0g/fU3yrO47v4fsugaZ6O2oLrGahj4MUGxSCc5.WXT66ZGDgvWL.', false, true, 1); --pass4
