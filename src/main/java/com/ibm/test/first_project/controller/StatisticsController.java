@@ -1,11 +1,13 @@
 package com.ibm.test.first_project.controller;
 
+import com.ibm.test.first_project.constants.SpringSecurityConstants;
 import com.ibm.test.first_project.data.dtos.statistics.StatisticsGetResDTO;
 import com.ibm.test.first_project.services.StatisticsService;
 import com.ibm.test.first_project.utils.CustomModelMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,6 +24,7 @@ public class StatisticsController {
     private final CustomModelMapper modelMapper;
 
     @GetMapping
+    @Secured(SpringSecurityConstants.ROLE_MANAGER)
     public ResponseEntity<StatisticsGetResDTO> getTotalSalesIncome(
             @RequestParam(value = "brand", required = false) String brand,
             @RequestParam(value = "color", required = false) String color) {
